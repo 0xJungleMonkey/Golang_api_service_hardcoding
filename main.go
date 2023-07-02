@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/0xJungleMonkey/timemanagementapp/controllers"
 	"github.com/0xJungleMonkey/timemanagementapp/database"
 	"github.com/gin-gonic/gin"
@@ -9,7 +11,10 @@ import (
 func main() {
 
 	r := gin.Default()
-	database.ConnectDatabase()
+	err := database.ConnectDatabase()
+	if err != nil {
+		fmt.Println("Error connecting to the database:", err)
+	}
 	r.GET("/records", controllers.FindRecords)
 	r.GET("/record/:id", controllers.FindRecord)
 	r.POST("/records", controllers.CreateRecord)
